@@ -1,0 +1,26 @@
+[tool.isort]
+    profile = "black"
+
+[tool.mypy]
+    disallow_untyped_defs  = true
+    ignore_missing_imports = true
+    no_strict_optional     = true
+    pretty                 = true
+    show_error_codes       = true
+    warn_redundant_casts   = true
+    warn_unreachable       = true
+    warn_unused_ignores    = true
+
+[tool.ruff]
+    select = [ "ALL" ]
+    ignore = [
+        "ANN101",  # missing-type-self (flake8-annotations)
+        "ANN102",  # missing-type-cls (flake8-annotations)
+        "D211",    # one-blank-line-before-class (pydocstyle)
+        "D213",    # multi-line-summary-second-line (pydocstyle)
+        "D203",    # one-blank-line-before-class (pydocstyle)
+    ]
+
+    extend-exclude = ["venv3", ".venv3"]
+    # Only ignore variables named "_".
+    dummy-variable-rgx = "^_$"
