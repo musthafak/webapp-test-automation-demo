@@ -1,4 +1,4 @@
-# Trello Test Automation Demo
+# Trello WebApp Test Automation Demo
 
 ## Introduction
 
@@ -164,10 +164,10 @@ To run the frontend and backend tests written in Python, follow these steps to s
    pip install -r requirements.txt
    ```
 
-3. **Update Config File**
+3. **Update Config File:**
    Update the configuration file `configs/config.json` in the test directory to manage test environment settings, such as the Trello API key, token, base URLs, and browser configurations. Supported browsers are firefox and chrome.
 
-4. **Execute Tests**
+4. **Execute Tests:**
    Execute the automated test scripts by running following commands
    ```
    # Backend tests
@@ -179,10 +179,14 @@ To run the frontend and backend tests written in Python, follow these steps to s
 
 ### Test Reports
 
-To generate an HTML test report, use the following command:
-```
-behave features/frontend -f behave_html_formatter:HTMLFormatter -o report.html
-```
+* To generate an HTML test report, use the following command:
+  ```
+  # Backend tests
+  behave features/backend -f behave_html_formatter:HTMLFormatter -o report.html
+
+  # Frontend tests
+  behave features/frontend -f behave_html_formatter:HTMLFormatter -o report.html
+  ```
 
 > NOTE: You can also generate [Allure Python](https://github.com/allure-framework/allure-python) reports using Allure Python for attractive and interactive HTML reports with detailed test execution insights.
 
@@ -190,20 +194,26 @@ behave features/frontend -f behave_html_formatter:HTMLFormatter -o report.html
 
 To execute these tests within a Docker container, follow these steps:
 
-* **Build Docker Image**
+* **Build Docker Image:**
   Build the Docker image using the provided Dockerfile in the `automation` directory with the following command:
   ```
   docker build -t <image name> -f automation/Dockerfile .
   ```
 
-* **Run Tests**
+* **Run Tests:**
   Run the tests inside the Docker container using the following command:
   ```
   docker run --rm -it <image name>
   ```
 
-* **Generate Report**
+* **Generate Report:**
   To generate a report, use Docker volume mounting to map a local directory to the container's directory. This allows the report files to be saved on the host machine:
+  ```
+  docker run --privileged --rm -it -v $(pwd)/reports:/workspace/reports <image name>
+  . .venv/bin/activate
+  behave features/backend -f behave_html_formatter:HTMLFormatter -o reports/report.html
+  ```
+  OR
   ```
   docker run --privileged --rm -it -v $(pwd)/reports:/workspace/reports <image name> -c '. .venv/bin/activate; behave features/backend -f behave_html_formatter:HTMLFormatter -o reports/report.html'
   ```
