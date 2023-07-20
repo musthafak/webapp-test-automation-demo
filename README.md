@@ -137,9 +137,9 @@ To run the frontend and backend tests written in Python, follow these steps to s
 1. **Install Python:**
    Ensure Python 3.8+ is installed on your machine. If you don't have Python installed, download and install it from the official Python website (https://www.python.org/downloads/).
 2. **Trello Account:**
-   To run the tests against the Trello application, you'll need a Trello account. If you don't have one, you can register for free at https://trello.com/signup (A test account credentials are given in the configs/config.json file, feel free to update it).
+   To run the tests against the Trello application, you'll need a Trello account. If you don't have one, you can register for free at https://trello.com/signup (A test account credentials are given in the `configs/test_environment.json` file, feel free to update it).
 3. **Trello API Key and Token:**
-   Once you have a Trello account, log in, and then access your API key and token from the Trello developer website (https://developers.trello.com/). These credentials will be used to authenticate your test scripts with the Trello API (A test account credentials are given in the configs/config.json file, feel free to update it).
+   Once you have a Trello account, log in, and then access your API key and token from the Trello developer website (https://developers.trello.com/). These credentials will be used to authenticate your test scripts with the Trello API (A test account credentials are given in the `configs/test_environment.json` file, feel free to update it).
 4. **Web Driver:**
    Selenium requires a web driver to interact with the browser. Depending on your preferred browser, download the corresponding web driver:
    - Chrome: ChromeDriver (https://sites.google.com/a/chromium.org/chromedriver/downloads)
@@ -165,7 +165,7 @@ To run the frontend and backend tests written in Python, follow these steps to s
    ```
 
 3. **Update Config File:**
-   Update the configuration file `configs/config.json` in the test directory to manage test environment settings, such as the Trello API key, token, base URLs, and browser configurations. Supported browsers are firefox and chrome.
+   Update the configuration file `configs/test_environment.json` in the test directory to manage test environment settings, such as the Trello email, password, API key, token, base URLs, and browser configurations. Supported browsers are firefox and chrome.
 
 4. **Execute Tests:**
    Execute the automated test scripts by running following commands

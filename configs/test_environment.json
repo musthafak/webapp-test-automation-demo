@@ -1,0 +1,13 @@
+{
+    "browser": "firefox",
+    "credentials": {
+        "email": "masehov281@meogl.com",
+        "key": "11e751c02ea01e87dc1371758bcb7da1",
+        "password": "Uq8r^+Y:hLe_$w3",
+        "token": "ATTAb528480dc9c9055f015322718ad9891dffb2fa5eda642b1a925aec56d688cd9dC845FBAC"
+    },
+    "url": {
+        "backend_base_url": "https://api.trello.com/1",
+        "frontend_base_url": "https://trello.com/"
+    }
+}

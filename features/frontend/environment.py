@@ -6,21 +6,26 @@ import os
 
 from xvfbwrapper import Xvfb
 
+from lib.backend.utils import delete_all_boards_via_restapt
+from lib.frontend.utils import get_webdriver
 from lib.typing import FrontendContext
-from lib.utils import get_tests_config, get_webdriver
+from lib.utils import get_test_environment_config
+
+
+def before_all(_: FrontendContext) -> None:
+    """Remove all existing boards from trello."""
+    delete_all_boards_via_restapt()
 
 
 def before_scenario(context: FrontendContext, *_: tuple) -> None:
     """Test setup steps before each test."""
-    config = get_tests_config()
+    config = get_test_environment_config()
     if os.environ.get("IS_BROWSER_INSIDE_CONTAINER") == "TRUE":
         context.vdisplay = Xvfb(width=1920, height=1080)
         context.vdisplay.start()
     else:
         context.vdisplay = None
-    context.browser = get_webdriver(
-        config["driver"]["browser"],
-    )
+    context.browser = get_webdriver(config["browser"])
     context.browser.get(config["url"]["frontend_base_url"])
     context.board_name = None
     context.board_page = None

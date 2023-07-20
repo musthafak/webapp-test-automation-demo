@@ -9,7 +9,7 @@ repos:
       - id: name-tests-test
       - id: requirements-txt-fixer
       - id: pretty-format-json
-        args: [ --autofix, --indent=2 ]
+        args: [ --autofix, --indent=4 ]
   - repo: https://github.com/asottile/add-trailing-comma
     rev: v3.0.0
     hooks:
@@ -23,7 +23,7 @@ repos:
     rev: 23.1.0
     hooks:
       - id: black
-        args: [ --safe ]
+        args: [ --safe, --line-length=80 ]
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.0.278
     hooks:

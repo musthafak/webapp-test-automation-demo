@@ -6,13 +6,13 @@ from behave import given, then, when  # pylint: disable=no-name-in-module
 
 from lib.frontend.pages.login_page import LoginPage
 from lib.typing import FrontendContext
-from lib.utils import get_tests_config
+from lib.utils import get_test_environment_config
 
 
 @given("I am on the Trello homepage")
 def iam_on_the_trello_homepage(context: FrontendContext) -> None:
     """Perform login to trello and update the context with homepage."""
-    credential = get_tests_config()["credentials"]["frontend"]
+    credential = get_test_environment_config()["credentials"]
     context.home_page = LoginPage(context.browser).login(
         credential["email"],
         credential["password"],
@@ -98,4 +98,6 @@ def validate_number_of_boards(
     board_name: str,
 ) -> None:
     """Validate workspace has no boards."""
-    assert board_name not in context.board_page.get_all_board_names()  # noqa: S101
+    assert (  # noqa: S101
+        board_name not in context.board_page.get_all_board_names()
+    )
