@@ -1,7 +1,5 @@
 """Hooks to run before and after certain steps."""
 
-# pylint: disable=missing-docstring
-
 from lib.backend.utils import delete_board_via_restapi
 from lib.typing import BackendContext
 from lib.utils import get_test_environment_config

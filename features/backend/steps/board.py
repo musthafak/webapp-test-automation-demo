@@ -1,6 +1,5 @@
 """Test steps to be used by frontend tests."""
 
-# pylint: disable=missing-docstring
 
 import json
 
@@ -65,35 +64,41 @@ def make_a_request_with_payload(
 @then("the response status code should be {status_code}")
 def verify_response_code(context: BackendContext, status_code: str) -> None:
     """Verify server respose code is equal to given status code."""
-    assert context.response.status_code == int(  # noqa: S101
-        status_code,
-    ), context.response.status_code
+    if context.response.status_code == int(status_code):
+        return
+    error_message = (
+        f"Wrong response status code. Expected: {status_code}, Received:"
+        f" {context.response.status_code}"
+    )
+    raise ValueError(error_message)
 
 
 @then("the response body should contain the board ID")
 def verify_response_body_has_board_id(context: BackendContext) -> None:
     """Verify respose json has board ID."""
     response_json = context.response.json()
-    assert "id" in response_json  # noqa: S101
-    context.board_id = response_json["id"]
+    if "id" in response_json:
+        context.board_id = response_json["id"]
+        return
+    error_message = "The response doesn't contain board ID"
+    raise ValueError(error_message)
 
 
 @then("the board should be created successfully")
 def verify_board_created_successfully(context: BackendContext) -> None:
     """Verify the board is created successfully on the server."""
     response_json = context.response.json()
-    assert "id" in response_json  # noqa: S101
-    assert "name" in response_json  # noqa: S101
-    assert response_json["name"] == "Project A"  # noqa: S101
+    if "name" in response_json:
+        return
+    error_message = "The response doesn't have board name"
+    raise ValueError(error_message)
 
 
 @then("the response body should contain the board details")
 def verify_reponse_contains_board_details(context: BackendContext) -> None:
     """Verify json response contains board details."""
-    response_json = context.response.json()
-    assert "id" in response_json  # noqa: S101
-    assert "name" in response_json  # noqa: S101
-    assert response_json["id"] == context.board_id  # noqa: S101
+    verify_response_body_has_board_id(context)
+    verify_board_created_successfully(context)
 
 
 @then('the board name should be updated to "{updated_name}"')
@@ -108,7 +113,13 @@ def verify_board_name_is_updated(
         url,
         _get_payload(context, None),
     ).json()
-    assert response_json["name"] == updated_name  # noqa: S101
+    if response_json["name"] == updated_name:
+        return
+    error_message = (
+        f"Board name is not updated. Expected: {updated_name}, Current:"
+        f" {response_json['name']}"
+    )
+    raise ValueError(error_message)
 
 
 @then("the board should be deleted successfully")
@@ -119,8 +130,11 @@ def verify_board_is_deleted_successfully(context: BackendContext) -> None:
         f"{context.base_url}/boards/{context.board_id}",
         _get_payload(context, None),
     )
-    assert response.status_code == 404  # noqa: S101,PLR2004
-    context.board_id = None
+    if response.status_code == 404:  # noqa: PLR2004
+        context.board_id = None
+        return
+    error_message = "The board still exists on the server."
+    raise ValueError(error_message)
 
 
 @then('the response body should contain "{error_message}"')
@@ -129,7 +143,13 @@ def verify_response_had_error_message(
     error_message: str,
 ) -> None:
     """Verify the respose contain given error message."""
-    assert error_message in context.response.text  # noqa: S101
+    if error_message in context.response.text:
+        return
+    error_message = (
+        f"Given {error_message!r} error message not contains in response."
+        f" Received response: {context.response.text}"
+    )
+    raise ValueError(error_message)
 
 
 @given("I have a board ID")

@@ -10,14 +10,14 @@ def get_webdriver(browser: str) -> WebDriver:
     :return: webdriver instance
     :rtype: WebDriver
     """
-    if browser == "firefox":
-        driver: WebDriver = webdriver.Firefox()
-    elif browser == "chrome":
-        driver = webdriver.Chrome()
-    elif browser == "edge":
-        driver = webdriver.Edge()
-    else:
-        error_msg = f"Invalid browser type: {browser}"
-        raise ValueError(error_msg)
-    driver.maximize_window()
-    return driver
+    web_drivers = {
+        "firefox": webdriver.Firefox,
+        "chrome": webdriver.Chrome,
+        "edge": webdriver.Edge,
+    }
+    if browser in web_drivers:
+        driver = web_drivers[browser]()
+        driver.maximize_window()
+        return driver
+    error_msg = f"Unsupported browser type: {browser}"
+    raise ValueError(error_msg)

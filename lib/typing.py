@@ -4,6 +4,8 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
+from behave.runner import Context
+
 if TYPE_CHECKING:
     import requests
     from selenium.webdriver.remote.webdriver import WebDriver
@@ -14,7 +16,7 @@ if TYPE_CHECKING:
     from lib.frontend.pages.login_page import LoginPage
 
 
-class FrontendContext:  # pylint: disable=too-few-public-methods
+class FrontendContext(Context):  # pylint: disable=too-few-public-methods
     """Frontend context class definition."""
 
     browser: WebDriver
@@ -25,7 +27,7 @@ class FrontendContext:  # pylint: disable=too-few-public-methods
     vdisplay: Xvfb
 
 
-class BackendContext:  # pylint: disable=too-few-public-methods
+class BackendContext(Context):  # pylint: disable=too-few-public-methods
     """Frontend context class definition."""
 
     text: str

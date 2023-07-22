@@ -1,11 +1,10 @@
 FROM python:3.11.4-slim-bookworm
 
+ENV MOZ_HEADLESS=1
 ENV DEBIAN_FRONTEND=noninteractive
-ENV IS_BROWSER_INSIDE_CONTAINER=TRUE
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     firefox-esr=102.13.0esr-1~deb12u1 \
-    xvfb=2:21.1.7-3 \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /workspace

@@ -73,7 +73,7 @@ def delete_board_via_restapi(board_id: str) -> None:
     ).raise_for_status()
 
 
-def delete_all_boards_via_restapt() -> None:
+def delete_all_boards_via_restapi() -> None:
     """Delete all boards on the trello via restapi."""
     boards_response = _make_http_request_with_credentials(
         "GET",

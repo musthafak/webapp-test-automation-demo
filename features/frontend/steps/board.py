@@ -1,7 +1,5 @@
 """Test steps to be used by frontend tests."""
 
-# pylint: disable=missing-docstring
-
 from behave import given, then, when  # pylint: disable=no-name-in-module
 
 from lib.frontend.pages.login_page import LoginPage
@@ -53,7 +51,10 @@ def validate_board_name(
     board_name: str,
 ) -> None:
     """Validate new board name is match with given name."""
-    assert context.board_page.get_board_name() == board_name  # noqa: S101
+    if context.board_page.get_board_name() == board_name:
+        return
+    error_message = f"Not able to see a board with name {board_name!r}"
+    raise ValueError(error_message)
 
 
 @given('I create a board with name "{board_name}"')
@@ -67,16 +68,20 @@ def create_a_board_with_given_name(
     context.board_page = context.home_page.create_board(board_name)
 
 
-@given('I have "{num_lists}" lists on the board')
-@then('I have "{num_lists}" lists on the board')
+@given('I have "{expected_number}" lists on the board')
+@then('I have "{expected_number}" lists on the board')
 def validate_number_of_lists(
     context: FrontendContext,
-    num_lists: str,
+    expected_number: str,
 ) -> None:
     """Validate number of lists in the board with given number."""
-    assert len(context.board_page.get_all_lists()) == int(  # noqa: S101
-        num_lists,
+    num_list = len(context.board_page.get_all_lists())
+    if num_list == int(expected_number):
+        return
+    error_message = (
+        f"The board has {num_list} lists. Expected: {expected_number}"
     )
+    raise ValueError(error_message)
 
 
 @when("I archive first list item")
@@ -98,6 +103,11 @@ def validate_number_of_boards(
     board_name: str,
 ) -> None:
     """Validate workspace has no boards."""
-    assert (  # noqa: S101
-        board_name not in context.board_page.get_all_board_names()
+    board_names = context.board_page.get_all_board_names()
+    if board_name not in board_names:
+        return
+    error_message = (
+        f"{board_name} board available on workspace. Available boards:"
+        f" {board_names}"
     )
+    raise ValueError(error_message)
