@@ -146,7 +146,7 @@ To run the frontend and backend tests written in Python, follow these steps to s
    - Firefox: GeckoDriver (https://github.com/mozilla/geckodriver/releases)
    Ensure the web driver is in your system's PATH or specify its location in the test scripts.
 
-> NOTE: You can run the tests inside a docker container, follow instructions in the next session.
+> You can run the tests inside a docker container, follow instructions in the next session.
 
 ### Run the Tests
 
@@ -165,7 +165,7 @@ To run the frontend and backend tests written in Python, follow these steps to s
    ```
 
 3. **Update Config File:**
-   Update the configuration file `configs/test_environment.json` in the test directory to manage test environment settings, such as the Trello email, password, API key, token, base URLs, and browser configurations. Supported browsers are firefox and chrome.
+   Update the configuration file `configs/test_environment.json` in the test directory to manage test environment settings, such as the Trello email, password, API key, token, base URLs, and browser configurations. Supported browsers are firefox, edge and chrome.
 
 4. **Execute Tests:**
    Execute the automated test scripts by running following commands
@@ -179,7 +179,7 @@ To run the frontend and backend tests written in Python, follow these steps to s
 
 ### Test Reports
 
-* To generate an HTML test report, use the following command:
+* To generate an HTML test report with screenshots on test failure, use the following command:
   ```
   # Backend tests
   behave features/backend -f behave_html_formatter:HTMLFormatter -o report.html
@@ -188,7 +188,7 @@ To run the frontend and backend tests written in Python, follow these steps to s
   behave features/frontend -f behave_html_formatter:HTMLFormatter -o report.html
   ```
 
-> NOTE: You can also generate [Allure Python](https://github.com/allure-framework/allure-python) reports using Allure Python for attractive and interactive HTML reports with detailed test execution insights.
+> You can also generate [Allure Python](https://github.com/allure-framework/allure-python) reports using Allure Python for attractive and interactive HTML reports with detailed test execution insights.
 
 ### Run Inside Docker
 
@@ -218,4 +218,4 @@ To execute these tests within a Docker container, follow these steps:
   docker run --privileged --rm -it -v $(pwd)/reports:/workspace/reports <image name> -c '. .venv/bin/activate; behave features/backend -f behave_html_formatter:HTMLFormatter -o reports/report.html'
   ```
 
-> NOTE: This Docker image can also be utilized in CI/CD pipelines to automate test execution and report generation for seamless integration into your continuous integration and deployment processes.
+> This Docker image can also be utilized in CI/CD pipelines to automate test execution and report generation for seamless integration into your continuous integration and deployment processes.
