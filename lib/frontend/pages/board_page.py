@@ -19,14 +19,7 @@ class _SELECTORS:  # pylint: disable=too-few-public-methods
         '[class="board-tile-details-name"]',
     )
     OPTIONS_MENU = (By.CSS_SELECTOR, r'[aria-label="Show menu"]')
-    MORE_OPTIONS_IN_THE_MENU = (
-        By.CSS_SELECTOR,
-        r'[class="board-menu-navigation-item-link js-open-more"]',
-    )
-    CLOSE_BOARD_MENU_ITEM = (
-        By.CSS_SELECTOR,
-        r'[class="board-menu-navigation-item-link js-close-board"]',
-    )
+    CLOSE_BOARD_MENU_ITEM = (By.CSS_SELECTOR, ".js-close-board")
     CLOSE_BOARD_CONFIRM_BUTTON = (
         By.CSS_SELECTOR,
         r'[class="js-confirm full nch-button nch-button--danger"]',
@@ -86,7 +79,6 @@ class BoardPage(BasePage):
     def delete_board(self) -> None:
         """Delete current board."""
         self._click_element(_SELECTORS.OPTIONS_MENU)
-        self._click_element(_SELECTORS.MORE_OPTIONS_IN_THE_MENU)
         self._click_element(_SELECTORS.CLOSE_BOARD_MENU_ITEM)
         self._click_element(_SELECTORS.CLOSE_BOARD_CONFIRM_BUTTON)
         self._click_element(_SELECTORS.PERMANENTLY_DELETE_BOARD)
